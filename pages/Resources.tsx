@@ -155,13 +155,27 @@ const Resources: React.FC = () => {
                         </p>
                       </div>
                       <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
-                         <button className="flex items-center text-primary-600 hover:text-primary-800 font-medium">
+                         <a 
+                            href={resource.downloadUrl}
+                            className="flex items-center text-primary-600 hover:text-primary-800 font-medium cursor-pointer"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (resource.downloadUrl === '#') {
+                                    e.preventDefault();
+                                    alert(`Téléchargement de : ${resource.title}`);
+                                }
+                            }}
+                         >
                             <Download className="h-4 w-4 mr-1" />
                             Télécharger
-                         </button>
+                         </a>
                          {canUpload && (
                            <button 
-                             onClick={() => handleDelete(resource.id)}
+                             type="button"
+                             onClick={(e) => {
+                                 e.stopPropagation();
+                                 handleDelete(resource.id);
+                             }}
                              className="ml-4 flex items-center text-red-600 hover:text-red-800 font-medium transition-colors"
                              title="Supprimer la ressource"
                            >
